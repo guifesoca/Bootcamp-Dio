@@ -4,59 +4,80 @@ import br.com.dio.desafio.dominio.Dev;
 import br.com.dio.desafio.dominio.Mentoria;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Curso curso1 = new Curso();
-        curso1.setTitulo("curso java");
-        curso1.setDescricao("descrição curso java");
-        curso1.setCargaHoraria(8);
+        Curso curso1_java = new Curso();
+        curso1_java.setTitulo("curso java");
+        curso1_java.setDescricao("descrição curso java");
+        curso1_java.setCargaHoraria(8);
 
-        Curso curso2 = new Curso();
-        curso2.setTitulo("curso js");
-        curso2.setDescricao("descrição curso js");
-        curso2.setCargaHoraria(4);
+        Curso curso2_java = new Curso();
+        curso2_java.setTitulo("curso js");
+        curso2_java.setDescricao("descrição curso js");
+        curso2_java.setCargaHoraria(4);
 
-        Mentoria mentoria = new Mentoria();
-        mentoria.setTitulo("mentoria de java");
-        mentoria.setDescricao("descrição mentoria java");
-        mentoria.setData(LocalDate.now());
+        Mentoria mentoria_java = new Mentoria();
+        mentoria_java.setTitulo("mentoria de java");
+        mentoria_java.setDescricao("descrição mentoria java");
+        mentoria_java.setData(LocalDate.now());
 
-        /*System.out.println(curso1);
-        System.out.println(curso2);
-        System.out.println(mentoria);*/
+        Bootcamp bootcamp_java = new Bootcamp();
+        bootcamp_java.setNome("Bootcamp Java Developer");
+        bootcamp_java.setDescricao("Descrição Bootcamp Java Developer");
+        bootcamp_java.getConteudos().add(curso1_java);
+        bootcamp_java.getConteudos().add(curso2_java);
+        bootcamp_java.getConteudos().add(mentoria_java);
 
-        Bootcamp bootcamp = new Bootcamp();
-        bootcamp.setNome("Bootcamp Java Developer");
-        bootcamp.setDescricao("Descrição Bootcamp Java Developer");
-        bootcamp.getConteudos().add(curso1);
-        bootcamp.getConteudos().add(curso2);
-        bootcamp.getConteudos().add(mentoria);
+        Curso curso_python = new Curso();
+        curso_python.setTitulo("curso python");
+        curso_python.setDescricao("descrição curso python");
+        curso_python.setCargaHoraria(6);
 
-        Dev devCamila = new Dev();
-        devCamila.setNome("Camila");
-        devCamila.inscreverBootcamp(bootcamp);
-        System.out.println("Conteúdos Inscritos Camila:" + devCamila.getConteudosInscritos());
-        devCamila.progredir();
-        devCamila.progredir();
-        System.out.println("-");
-        System.out.println("Conteúdos Inscritos Camila:" + devCamila.getConteudosInscritos());
-        System.out.println("Conteúdos Concluídos Camila:" + devCamila.getConteudosConcluidos());
-        System.out.println("XP:" + devCamila.calcularTotalXp());
+        Mentoria mentoria_python = new Mentoria();
+        mentoria_python.setTitulo("mentoria de python");
+        mentoria_python.setDescricao("descrição mentoria python");
+        mentoria_python.setData(LocalDate.now());
 
-        System.out.println("-------");
+        Bootcamp bootcamp_python = new Bootcamp();
+        bootcamp_python.setNome("Bootcamp Python Developer");
+        bootcamp_python.setDescricao("Descrição Bootcamp Python Developer");
+        bootcamp_python.getConteudos().add(curso_python);
+        bootcamp_python.getConteudos().add(mentoria_python);
 
-        Dev devJoao = new Dev();
-        devJoao.setNome("Joao");
-        devJoao.inscreverBootcamp(bootcamp);
-        System.out.println("Conteúdos Inscritos João:" + devJoao.getConteudosInscritos());
-        devJoao.progredir();
-        devJoao.progredir();
-        devJoao.progredir();
-        System.out.println("-");
-        System.out.println("Conteúdos Inscritos João:" + devJoao.getConteudosInscritos());
-        System.out.println("Conteúdos Concluidos João:" + devJoao.getConteudosConcluidos());
-        System.out.println("XP:" + devJoao.calcularTotalXp());
+        Scanner sn = new Scanner(System.in);
+        System.out.println("Olá Dev! Digite seu nome:");
+        String nome = sn.nextLine();
+        Dev novoDev = new Dev();
+        novoDev.setNome(nome);
+
+        int opcao = 0;
+        do {
+            Scanner so = new Scanner(System.in);
+            System.out.println("Qual Bootcamp deseja fazer? 1- Java Developer; 2- Python Developer.");
+            opcao = so.nextInt();
+        } while(opcao < 1 || opcao > 2);
+
+        if(opcao == 1) {
+            novoDev.inscreverBootcamp(bootcamp_java);
+        }
+        
+        else if(opcao == 2) {
+            novoDev.inscreverBootcamp(bootcamp_python);
+        }
+
+        while(novoDev.getConteudosInscritos().size() > 0) {
+            System.out.println("Conteúdos Inscritos " + novoDev.getNome() + ":" + novoDev.getConteudosInscritos());
+            System.out.println("XP:" + novoDev.calcularTotalXp());
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Tecle enter quando concluído o atual conteúdo.");
+            sc.nextLine();
+            novoDev.progredir();
+            System.out.println("Conteúdos Concluídos " + novoDev.getNome() + ":" + novoDev.getConteudosConcluidos());
+        }
+
+        System.out.println("Parabéns " + novoDev.getNome() + ". Você concluiu todo o conteúdo.");
 
     }
 
